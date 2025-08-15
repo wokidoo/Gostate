@@ -51,6 +51,10 @@ var _state_machine: StateMachine
 var state_machine: StateMachine:
 	get(): return _state_machine
 
+func _init():
+	child_entered_tree.connect(_child_entered_tree)
+	child_exiting_tree.connect(_child_exiting_tree)
+
 func _ready():
 	# Prevent running in editor.
 	if Engine.is_editor_hint():
@@ -103,14 +107,25 @@ func _unhandled_input(event):
 	## Called on unhandled input; emits `state_unhandled_input` when active.
 	state_unhandled_input.emit(event)
 
+func _child_entered_tree(child:Node):
+	## Connect state_event signal to child _process_event method on tree entry
+	## check that the child is a State and that the signal is not already connected
+	if child is State:
+		if not state_event.is_connected(child._process_event):
+			state_event.connect(child._process_event)
+
+func _child_exiting_tree(child:Node):
+	## Disconnect state_event signal from child _prcoess_event on tree exit
+	## check that child is State and that signal is connected
+	if child is State:
+		if state_event.is_connected(child._process_event):
+			state_event.disconnect(child._process_event)
+
 func _process_event(event: StringName):
-	## Called by StateMachine to propagate custom events.
+	## If state is active, propagate event down to child states.
+	## Do nothing otherwise.
 	if self.active:
 		state_event.emit(event)
-		for child in get_children(true):
-			# guarnetees that the child has the _process_event method
-			if child is State:
-				child._process_event(event)
 	else:
 		return
 

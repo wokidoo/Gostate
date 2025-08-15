@@ -21,3 +21,7 @@ project/assembly_name="Gostate"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Gostate/plugin.cfg", "res://addons/gostate/plugin.cfg")
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

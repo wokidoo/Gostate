@@ -1,0 +1,183 @@
+[gd_scene load_steps=9 format=3 uid="uid://prnnd1ak0ccy"]
+
+[ext_resource type="Script" uid="uid://c75ox5ygd7wia" path="res://addons/gostate/scripts/state_transition.gd" id="2_4aogg"]
+
+[sub_resource type="GDScript" id="GDScript_s52l6"]
+resource_name = "state_machine_root"
+script/source = "extends StateMachine
+
+func _on_state_input(event:InputEvent):
+	if event.is_action_pressed(\"ui_cancel\"):
+		send_event(\"foo\")
+"
+
+[sub_resource type="GDScript" id="GDScript_u45cv"]
+resource_name = "state_machine"
+script/source = "extends StateMachine
+
+func _on_state_input(event:InputEvent):
+	if event.is_action_pressed(\"ui_accept\"):
+		send_event(\"boom\")
+
+
+func _on_state_entered():
+	print_rich(\"[color=purple]Entering StateMachineA[/color]\")
+
+
+func _on_state_exited():
+	print_rich(\"[color=purple]Exiting StateMachineA[/color]\")
+"
+
+[sub_resource type="GDScript" id="GDScript_eewjv"]
+resource_name = "state_a"
+script/source = "extends State
+
+func _on_state_entered():
+	print_rich(\"[color=teal]Entering StateA[/color]\")
+
+func _on_state_exited():
+	print(\"[color=teal]Exiting StateA[/color]\")
+"
+
+[sub_resource type="GDScript" id="GDScript_nob7e"]
+resource_name = "state_b"
+script/source = "extends State
+
+func _on_state_entered():
+	print_rich(\"[color=orange]Entering StateB[/color]\")
+
+func _on_state_exited():
+	print(\"[color=orange]Exiting StateB[/color]\")
+"
+
+[sub_resource type="GDScript" id="GDScript_4aogg"]
+resource_name = "state_machine_c"
+script/source = "extends StateMachine
+
+func _on_state_input(event:InputEvent):
+	if event.is_action_pressed(\"ui_accept\"):
+		send_event(\"boom\")
+
+
+func _on_state_entered():
+	print_rich(\"[color=pink]Entering StateMachineB[/color]\")
+
+
+func _on_state_exited():
+	print_rich(\"[color=pink]Exiting StateMachineB[/color]\")
+"
+
+[sub_resource type="GDScript" id="GDScript_yds3m"]
+resource_name = "state_machine_c"
+script/source = "extends State
+
+func _on_state_entered():
+	print_rich(\"[color=green]Entering StateC[/color]\")
+
+func _on_state_exited():
+	print(\"[color=green]Exiting StateC[/color]\")
+"
+
+[sub_resource type="GDScript" id="GDScript_3hlna"]
+resource_name = "state_d"
+script/source = "extends State
+
+func _on_state_entered():
+	print_rich(\"[color=beige]Entering StateD[/color]\")
+
+func _on_state_exited():
+	print(\"[color=beige]Exiting StateD[/color]\")
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = SubResource("GDScript_s52l6")
+initial_state = NodePath("StateMachineA")
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="StateMachineA" type="Node" parent="StateMachine" node_paths=PackedStringArray("initial_state")]
+script = SubResource("GDScript_u45cv")
+initial_state = NodePath("StateA")
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="StateA" type="Node" parent="StateMachine/StateMachineA"]
+script = SubResource("GDScript_eewjv")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineA/StateA" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateB")
+trigger_event = &"boom"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[node name="StateB" type="Node" parent="StateMachine/StateMachineA"]
+script = SubResource("GDScript_nob7e")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineA/StateB" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateA")
+trigger_event = &"boom"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineA" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateMachineB")
+trigger_event = &"foo"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[node name="StateMachineB" type="Node" parent="StateMachine" node_paths=PackedStringArray("initial_state")]
+script = SubResource("GDScript_4aogg")
+initial_state = NodePath("StateC")
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="StateC" type="Node" parent="StateMachine/StateMachineB"]
+script = SubResource("GDScript_yds3m")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineB/StateC" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateD")
+trigger_event = &"boom"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[node name="StateD" type="Node" parent="StateMachine/StateMachineB"]
+script = SubResource("GDScript_3hlna")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineB/StateD" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateC")
+trigger_event = &"boom"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[node name="StateTransition" type="Node" parent="StateMachine/StateMachineB" node_paths=PackedStringArray("to")]
+script = ExtResource("2_4aogg")
+to = NodePath("../../StateMachineA")
+trigger_event = &"foo"
+metadata/_custom_type_script = "uid://c75ox5ygd7wia"
+
+[connection signal="state_input" from="StateMachine" to="StateMachine" method="_on_state_input"]
+[connection signal="state_entered" from="StateMachine/StateMachineA" to="StateMachine/StateMachineA" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineA" to="StateMachine/StateMachineA" method="_on_state_exited"]
+[connection signal="state_input" from="StateMachine/StateMachineA" to="StateMachine/StateMachineA" method="_on_state_input"]
+[connection signal="state_entered" from="StateMachine/StateMachineA/StateA" to="StateMachine/StateMachineA/StateA" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineA/StateA" to="StateMachine/StateMachineA/StateA" method="_on_state_exited"]
+[connection signal="state_entered" from="StateMachine/StateMachineA/StateB" to="StateMachine/StateMachineA/StateB" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineA/StateB" to="StateMachine/StateMachineA/StateB" method="_on_state_exited"]
+[connection signal="state_entered" from="StateMachine/StateMachineB" to="StateMachine/StateMachineB" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineB" to="StateMachine/StateMachineB" method="_on_state_exited"]
+[connection signal="state_input" from="StateMachine/StateMachineB" to="StateMachine/StateMachineB" method="_on_state_input"]
+[connection signal="state_entered" from="StateMachine/StateMachineB/StateC" to="StateMachine/StateMachineB/StateC" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineB/StateC" to="StateMachine/StateMachineB/StateC" method="_on_state_exited"]
+[connection signal="state_entered" from="StateMachine/StateMachineB/StateD" to="StateMachine/StateMachineB/StateD" method="_on_state_entered"]
+[connection signal="state_exited" from="StateMachine/StateMachineB/StateD" to="StateMachine/StateMachineB/StateD" method="_on_state_exited"]
