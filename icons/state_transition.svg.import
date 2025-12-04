@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rwdohxg5ydbj"
-path="res://.godot/imported/state_transition.svg-d81b6dacad0caf75c17c6054a4736858.ctex"
+path="res://.godot/imported/state_transition.svg-c7afb59f2ad52c6f16e7f6dd3a47fbc8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/gostate/icons/state_transition.svg"
-dest_files=["res://.godot/imported/state_transition.svg-d81b6dacad0caf75c17c6054a4736858.ctex"]
+source_file="res://icons/state_transition.svg"
+dest_files=["res://.godot/imported/state_transition.svg-c7afb59f2ad52c6f16e7f6dd3a47fbc8.ctex"]
 
 [params]
 

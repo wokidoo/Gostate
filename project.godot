@@ -20,7 +20,7 @@ project/assembly_name="Gostate"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Gostate/plugin.cfg", "res://addons/gostate/plugin.cfg")
+enabled=PackedStringArray()
 
 [rendering]
 

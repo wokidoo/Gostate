@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://prnnd1ak0ccy"]
 
-[ext_resource type="Script" uid="uid://bx384iuwj3u8u" path="res://addons/gostate/scripts/state_machine.gd" id="1_eewjv"]
-[ext_resource type="Script" uid="uid://b42om5mouo7ee" path="res://addons/gostate/scripts/state.gd" id="1_nob7e"]
+[ext_resource type="Script" uid="uid://bx384iuwj3u8u" path="res://scripts/state_machine.gd" id="1_eewjv"]
+[ext_resource type="Script" uid="uid://b42om5mouo7ee" path="res://scripts/state.gd" id="1_nob7e"]
 
 [sub_resource type="GDScript" id="GDScript_eewjv"]
 resource_name = "example_state_machine"

@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/gostate/icons/state.svg")
+@icon("uid://croparnxqnu4p")
 extends Node
 class_name State
 ## Represents a single state within a state machine, handling entry, exit,
