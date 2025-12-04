@@ -6,55 +6,48 @@ class_name State
 ## processing (both frame and physics), inputs, and custom events and all associated signals.
 
 ## Emitted when state is entered
-signal state_entered()
+signal entered()
 
 ## Emitted when state is exited
-signal state_exited()
+signal exited()
 
 ## Emitted when state is currently processing
 ## @param delta Time elapsed since last frame.
-signal state_processing(delta:float)
+signal process(delta:float)
 
 ## Emitted when state is currently physics processing
 ## @param delta Time elapsed since last physics frame.
-signal state_physics_processing(delta:float)
+signal physics_process(delta:float)
 
 ## Emitted when an input event occurs and the state is active.
 ## @param event The InputEvent received.
-signal state_input(event:InputEvent)
+signal input(event:InputEvent)
 
 ## Emitted when an unhandled input event occurs and the state is active.
 ## @param event The unhandled InputEvent.
 signal state_unhandled_input(event:InputEvent)
 
-## Emitted when a custom event is processed.
-## @param event The StringName of the event.
-signal state_event(event: StringName)
-
-@export var state_name: StringName
-
-## Internal flag tracking whether the state is active.
-## Use `active` to access this status.
-var _state_active: bool:
-	set(value):
-		_state_active = value
-		_update_processing()
-
 ## Returns `true` if this state is currently active.
-@export var active: bool:
-	get(): return _state_active
+var is_active: bool:
+	get(): return _is_active
 
-## Reference to the owning StateMachine. Internal use only.
-var _state_machine: StateMachine
+## Key/value pair representing transtions out of this state.
+## Key represents the StringName event that triggers the transition.
+@export var  transitions: Dictionary[StringName,State]
 
 ## Returns the associated StateMachine instance.
 var state_machine: StateMachine:
 	get(): return _state_machine
 
-func _init():
-	child_entered_tree.connect(_child_entered_tree)
-	child_exiting_tree.connect(_child_exiting_tree)
+## Reference to the owning StateMachine. Internal use only.
+var _state_machine: StateMachine
 
+## Internal flag tracking whether the state is active.
+## Use `active` to access this status.
+var _is_active: bool:
+	set(value):
+		_is_active = value
+		_update_processing()
 func _ready():
 	# Prevent running in editor.
 	if Engine.is_editor_hint():
@@ -78,67 +71,45 @@ func _find_state_machine(parent:Node) -> StateMachine:
 func _state_enter():
 	## Internal: Activates the state and emits `state_entered`.
 	_set_active(true)
-	state_entered.emit()
+	entered.emit()
 
 func _state_exit():
 	## Internal: Deactivates the state and emits `state_exited`.
 	_set_active(false)
-	state_exited.emit()
+	exited.emit()
 
 func _process(delta):
-    # Prevent running in editor.
+	# Prevent running in editor.
 	if Engine.is_editor_hint():
 		return
 	## Called every frame when active; emits `state_processing`.
-	state_processing.emit(delta)
+	process.emit(delta)
 
 func _physics_process(delta):
-    # Prevent running in editor.
+	# Prevent running in editor.
 	if Engine.is_editor_hint():
 		return
 	## Called every physics frame when active; emits `state_physics_processing`.
-	state_physics_processing.emit(delta)
+	physics_process.emit(delta)
 
 func _input(event):
 	## Called on input; emits `state_input` when active.
-	state_input.emit(event)
+	input.emit(event)
 
 func _unhandled_input(event):
 	## Called on unhandled input; emits `state_unhandled_input` when active.
 	state_unhandled_input.emit(event)
 
-func _child_entered_tree(child:Node):
-	## Connect state_event signal to child _process_event method on tree entry
-	## check that the child is a State and that the signal is not already connected
-	if child is State:
-		if not state_event.is_connected(child._process_event):
-			state_event.connect(child._process_event)
-
-func _child_exiting_tree(child:Node):
-	## Disconnect state_event signal from child _prcoess_event on tree exit
-	## check that child is State and that signal is connected
-	if child is State:
-		if state_event.is_connected(child._process_event):
-			state_event.disconnect(child._process_event)
-
-func _process_event(event: StringName):
-	## If state is active, propagate event down to child states.
-	## Do nothing otherwise.
-	if self.active:
-		state_event.emit(event)
-	else:
-		return
-
 func _set_active(status: bool = false):
 	## Sets the internal active flag.
-	_state_active = status
+	_is_active = status
 
 func _update_processing():
 	## Enables or disables processing based on active status.
-	set_process(active)
-	set_physics_process(active)
-	set_process_input(active)
-	set_process_unhandled_input(active)
+	set_process(is_active)
+	set_physics_process(is_active)
+	set_process_input(is_active)
+	set_process_unhandled_input(is_active)
 
 ## Makes sure the parent node is a StateMachine.
 ## Displays a warning in editor if it isn't.
