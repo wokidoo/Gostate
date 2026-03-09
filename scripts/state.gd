@@ -6,26 +6,26 @@ class_name State
 ## processing (both frame and physics), inputs, and custom events and all associated signals.
 
 ## Emitted when state is entered
-signal entered()
+signal state_entering()
 
 ## Emitted when state is exited
-signal exited()
+signal state_exiting()
 
 ## Emitted when state is currently processing
 ## @param delta Time elapsed since last frame.
-signal process(delta:float)
+signal state_processing(delta:float)
 
 ## Emitted when state is currently physics processing
 ## @param delta Time elapsed since last physics frame.
-signal physics_process(delta:float)
+signal state_physics_processing(delta:float)
 
 ## Emitted when an input event occurs and the state is active.
 ## @param event The InputEvent received.
-signal input(event:InputEvent)
+signal state_inputing(event:InputEvent)
 
 ## Emitted when an unhandled input event occurs and the state is active.
 ## @param event The unhandled InputEvent.
-signal state_unhandled_input(event:InputEvent)
+signal state_unhandled_inputing(event:InputEvent)
 
 ## Returns `true` if this state is currently active.
 var is_active: bool:
@@ -71,34 +71,74 @@ func _find_state_machine(parent:Node) -> StateMachine:
 func _state_enter():
 	## Internal: Activates the state and emits `state_entered`.
 	_set_active(true)
-	entered.emit()
+	state_entering.emit()
+	state_enter()
 
 func _state_exit():
 	## Internal: Deactivates the state and emits `state_exited`.
 	_set_active(false)
-	exited.emit()
+	state_exiting.emit()
+	state_exit()
 
 func _process(delta):
 	# Prevent running in editor.
 	if Engine.is_editor_hint():
 		return
 	## Called every frame when active; emits `state_processing`.
-	process.emit(delta)
+	state_processing.emit(delta)
+	state_process(delta)
 
 func _physics_process(delta):
 	# Prevent running in editor.
 	if Engine.is_editor_hint():
 		return
 	## Called every physics frame when active; emits `state_physics_processing`.
-	physics_process.emit(delta)
+	state_physics_processing.emit(delta)
+	state_physics_process(delta)
 
 func _input(event):
 	## Called on input; emits `state_input` when active.
-	input.emit(event)
+	state_inputing.emit(event)
+	state_input(event)
 
 func _unhandled_input(event):
 	## Called on unhandled input; emits `state_unhandled_input` when active.
-	state_unhandled_input.emit(event)
+	state_unhandled_inputing.emit(event)
+	state_unhandled_input(event)
+
+#region Overridable state functions
+
+## Overridable method.
+## Called once upon state being entered.
+func state_enter():
+	pass
+
+## Overridable method.
+## Called once upon state being exited.
+func state_exit():
+	pass
+
+## Overridable method.
+## Called every process frame while state is active.
+func state_process(_delta):
+	pass
+
+## Overridable method.
+## Called every physics_process frame while state is active.
+func state_physics_process(_delta):
+	pass
+
+## Overridable method.
+## Called when input is detected while state is active.
+func state_input(_event):
+	pass
+
+## Overridable method.
+## Called when unhandled_input is detected while state is active.
+func state_unhandled_input(_event):
+	pass
+
+#endregion
 
 func _set_active(status: bool = false):
 	## Sets the internal active flag.

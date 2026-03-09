@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://prnnd1ak0ccy"]
+[gd_scene format=3 uid="uid://prnnd1ak0ccy"]
 
 [ext_resource type="Script" uid="uid://bx384iuwj3u8u" path="res://scripts/state_machine.gd" id="1_eewjv"]
-[ext_resource type="Script" uid="uid://b42om5mouo7ee" path="res://scripts/state.gd" id="1_nob7e"]
 
 [sub_resource type="GDScript" id="GDScript_eewjv"]
 resource_name = "example_state_machine"
@@ -16,33 +15,89 @@ func _input(event: InputEvent) -> void:
 		state_machine_root.current_state.execute_event(\"foo\")
 	elif event.is_action_pressed(\"ui_accept\"):
 		state_machine_root.execute_event(\"bar\")
-
-func _on_state_aa_entered() -> void:
-	print(\"Entering StateAA\")
-
-func _on_state_ab_entered() -> void:
-	print(\"Entering StateAB\")
-
-func _on_state_aa_exited() -> void:
-	print(\"Exited StateAA\")
-
-func _on_state_ab_exited() -> void:
-	print(\"Exited StateAB\")
-
-func _on_state_ba_entered() -> void:
-	print(\"Entered StateBA\")
-
-func _on_state_ba_exited() -> void:
-	print(\"Exited StateBA\")
-
-func _on_state_bb_entered() -> void:
-	print(\"Entered StateBB\")
-
-func _on_state_bb_exited() -> void:
-	print(\"Exited StateBB\")
 "
 
-[node name="Control" type="Control"]
+[sub_resource type="GDScript" id="GDScript_ia1lp"]
+resource_name = "AA"
+script/source = "extends State
+
+func state_enter():
+	print(\"Entering StateAA\")
+
+func state_exit():
+	print(\"Leaving StateAA\")
+
+func state_process(_delta):
+	pass
+
+func state_physics_process(_delta):
+	pass
+
+func state_input(_event):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_uhqqe"]
+resource_name = "AB"
+script/source = "extends State
+
+func state_enter():
+	print(\"Entering StateAB\")
+
+func state_exit():
+	print(\"Leaving StateAB\")
+
+func state_process(_delta):
+	pass
+
+func state_physics_process(_delta):
+	pass
+
+func state_input(_event):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_sasra"]
+resource_name = "BA"
+script/source = "extends State
+
+func state_enter():
+	print(\"Entering StateBA\")
+
+func state_exit():
+	print(\"Leaving StateBA\")
+
+func state_process(_delta):
+	pass
+
+func state_physics_process(_delta):
+	pass
+
+func state_input(_event):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_coq8p"]
+resource_name = "BB"
+script/source = "extends State
+
+func state_enter():
+	print(\"Entering StateBB\")
+
+func state_exit():
+	print(\"Leaving StateBB\")
+
+func state_process(_delta):
+	pass
+
+func state_physics_process(_delta):
+	pass
+
+func state_input(_event):
+	pass
+"
+
+[node name="Control" type="Control" unique_id=2073356228]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,12 +108,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource("GDScript_eewjv")
 
-[node name="StateMachineRoot" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachineRoot" type="Node" parent="." unique_id=294647771 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_eewjv")
 initial_state = NodePath("StateMachineA")
 metadata/_custom_type_script = "uid://bx384iuwj3u8u"
 
-[node name="StateMachineA" type="Node" parent="StateMachineRoot" node_paths=PackedStringArray("initial_state", "transitions")]
+[node name="StateMachineA" type="Node" parent="StateMachineRoot" unique_id=64083237 node_paths=PackedStringArray("initial_state", "transitions")]
 script = ExtResource("1_eewjv")
 initial_state = NodePath("StateAA")
 transitions = {
@@ -66,21 +121,21 @@ transitions = {
 }
 metadata/_custom_type_script = "uid://bx384iuwj3u8u"
 
-[node name="StateAA" type="Node" parent="StateMachineRoot/StateMachineA" node_paths=PackedStringArray("transitions")]
-script = ExtResource("1_nob7e")
+[node name="StateAA" type="Node" parent="StateMachineRoot/StateMachineA" unique_id=523622414 node_paths=PackedStringArray("transitions")]
+script = SubResource("GDScript_ia1lp")
 transitions = {
 &"foo": NodePath("../StateAB")
 }
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="StateAB" type="Node" parent="StateMachineRoot/StateMachineA" node_paths=PackedStringArray("transitions")]
-script = ExtResource("1_nob7e")
+[node name="StateAB" type="Node" parent="StateMachineRoot/StateMachineA" unique_id=1870290974 node_paths=PackedStringArray("transitions")]
+script = SubResource("GDScript_uhqqe")
 transitions = {
 &"foo": NodePath("../StateAA")
 }
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="StateMachineB" type="Node" parent="StateMachineRoot" node_paths=PackedStringArray("initial_state", "transitions")]
+[node name="StateMachineB" type="Node" parent="StateMachineRoot" unique_id=881467670 node_paths=PackedStringArray("initial_state", "transitions")]
 script = ExtResource("1_eewjv")
 initial_state = NodePath("StateBA")
 transitions = {
@@ -88,25 +143,16 @@ transitions = {
 }
 metadata/_custom_type_script = "uid://bx384iuwj3u8u"
 
-[node name="StateBA" type="Node" parent="StateMachineRoot/StateMachineB" node_paths=PackedStringArray("transitions")]
-script = ExtResource("1_nob7e")
+[node name="StateBA" type="Node" parent="StateMachineRoot/StateMachineB" unique_id=749259941 node_paths=PackedStringArray("transitions")]
+script = SubResource("GDScript_sasra")
 transitions = {
 &"foo": NodePath("../StateBB")
 }
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="StateBB" type="Node" parent="StateMachineRoot/StateMachineB" node_paths=PackedStringArray("transitions")]
-script = ExtResource("1_nob7e")
+[node name="StateBB" type="Node" parent="StateMachineRoot/StateMachineB" unique_id=1522100096 node_paths=PackedStringArray("transitions")]
+script = SubResource("GDScript_coq8p")
 transitions = {
 &"foo": NodePath("../StateBA")
 }
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
-
-[connection signal="entered" from="StateMachineRoot/StateMachineA/StateAA" to="." method="_on_state_aa_entered"]
-[connection signal="exited" from="StateMachineRoot/StateMachineA/StateAA" to="." method="_on_state_aa_exited"]
-[connection signal="entered" from="StateMachineRoot/StateMachineA/StateAB" to="." method="_on_state_ab_entered"]
-[connection signal="exited" from="StateMachineRoot/StateMachineA/StateAB" to="." method="_on_state_ab_exited"]
-[connection signal="entered" from="StateMachineRoot/StateMachineB/StateBA" to="." method="_on_state_ba_entered"]
-[connection signal="exited" from="StateMachineRoot/StateMachineB/StateBA" to="." method="_on_state_ba_exited"]
-[connection signal="entered" from="StateMachineRoot/StateMachineB/StateBB" to="." method="_on_state_bb_entered"]
-[connection signal="exited" from="StateMachineRoot/StateMachineB/StateBB" to="." method="_on_state_bb_exited"]

@@ -85,7 +85,7 @@ func _execute_transition(to:State):
 func _state_enter():
 	## Internal: Activates the state and emits `state_entered`.
 	_set_active(true)
-	entered.emit()
+	state_entering.emit()
 	## Enter current state when state machine becomes active.
 	_current_state._state_enter()
 
@@ -94,7 +94,7 @@ func _state_exit():
 	_set_active(false)
 	## Leave current state when state machine becomes inactive.
 	_current_state._state_exit()
-	exited.emit()
+	state_exiting.emit()
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings : PackedStringArray = []
