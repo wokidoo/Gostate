@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://t3mnjf1o81d1"
-path="res://.godot/imported/state_machine.svg-7421428f9e90e87e80708e3fb1d9b1c4.ctex"
+path="res://.godot/imported/state_machine.svg-12d2218c1efc9fb966c7d3ef29793f32.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://icons/state_machine.svg"
-dest_files=["res://.godot/imported/state_machine.svg-7421428f9e90e87e80708e3fb1d9b1c4.ctex"]
+source_file="res://addons/Gostate/icons/state_machine.svg"
+dest_files=["res://.godot/imported/state_machine.svg-12d2218c1efc9fb966c7d3ef29793f32.ctex"]
 
 [params]
 

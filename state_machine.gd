@@ -88,6 +88,7 @@ func _state_enter():
 	state_entering.emit()
 	## Enter current state when state machine becomes active.
 	_current_state._state_enter()
+	state_enter()
 
 func _state_exit():
 	## Internal: Deactivates the current state and emits `state_exited`.
@@ -95,6 +96,7 @@ func _state_exit():
 	## Leave current state when state machine becomes inactive.
 	_current_state._state_exit()
 	state_exiting.emit()
+	state_exit()
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings : PackedStringArray = []

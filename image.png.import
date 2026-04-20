@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://i36sjy81q3iu"
-path="res://.godot/imported/image.png-2de165adb17dfebcee8a7cd6c9833936.ctex"
+path="res://.godot/imported/image.png-1022d68641262541282657a772fac970.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://image.png"
-dest_files=["res://.godot/imported/image.png-2de165adb17dfebcee8a7cd6c9833936.ctex"]
+source_file="res://addons/Gostate/image.png"
+dest_files=["res://.godot/imported/image.png-1022d68641262541282657a772fac970.ctex"]
 
 [params]
 
