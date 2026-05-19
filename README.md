@@ -11,10 +11,10 @@
 - [License](#-license)
 
 ## ✨ Features
-- **Easy to get started** - drop a StateMachine into your scene, add a couple of State nodes and pick an initial state. No boilerplate required.
+- **Easy to get started** - drop a GoStateMachine into your scene, add a couple of State nodes and pick an initial state. No boilerplate required.
 - **Organize behaviour visually** - group related states and nested machines in the scene tree so your game logic reads like a map.
-- **Predictable lifecycle** - states signal when they become active or inactive so you can hook up animations, sounds, or setup/teardown code without guessing timing.
-- **Event-driven transitions** - wire transitions with send_event(...) from code for quick, readable flow control.
+- **Predictable lifecycle** - GoState nodes emit signals when they become active or inactive so you can hook up animations, sounds, or setup/teardown code without guessing timing. They also expose most of the basic Godot overridable nodes such as _state_physics_process, _state_input, etc...
+- **Event-driven transitions** - wire transitions with trigger_state_event(...) from code for quick, readable flow control.
 - **Lightweight and non-intrusive** - small scripts, no external dependencies, and editor-friendly warnings so you spend less time debugging setup.
 
 ## ⚡ Quick start
