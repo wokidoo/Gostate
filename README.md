@@ -17,11 +17,6 @@
 - **Event-driven transitions** - wire transitions with send_event(...) from code for quick, readable flow control.
 - **Lightweight and non-intrusive** - small scripts, no external dependencies, and editor-friendly warnings so you spend less time debugging setup.
 
-
-## 📥 Installation
-1. Copy the `addons/gostate` folder into your project (it is already structured as a Godot plugin).   
-2. See the example scene: [addons/gostate/test_scene.tscn](addons/gostate/test_scene.tscn).
-
 ## ⚡ Quick start
 1. Add a [`GoStateMachine`](addons/gostate/scripts/state_machine.gd) node to your scene.  
 2. Add two child [`GoState`](addons/gostate/scripts/state.gd) nodes as children of the `GoStateMachine` and set the `initial_state` property in the state machine to one of them.  
