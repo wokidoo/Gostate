@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://t3mnjf1o81d1"
-path="res://.godot/imported/state_machine.svg-12d2218c1efc9fb966c7d3ef29793f32.ctex"
+uid="uid://croparnxqnu4p"
+path="res://.godot/imported/state.svg-751ab869232f5dc114336fa8661d6ca2.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/Gostate/icons/state_machine.svg"
-dest_files=["res://.godot/imported/state_machine.svg-12d2218c1efc9fb966c7d3ef29793f32.ctex"]
+source_file="res://addons/gostate/icons/state.svg"
+dest_files=["res://.godot/imported/state.svg-751ab869232f5dc114336fa8661d6ca2.ctex"]
 
 [params]
 
@@ -39,6 +39,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=8.0
+svg/scale=1.0
 editor/scale_with_editor_scale=true
 editor/convert_colors_with_editor_theme=false

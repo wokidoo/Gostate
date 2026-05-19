@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://prnnd1ak0ccy"]
+
+[ext_resource type="Script" uid="uid://bx384iuwj3u8u" path="res://addons/gostate/scripts/go_state_machine.gd" id="1_ht1s8"]
+[ext_resource type="Script" uid="uid://b42om5mouo7ee" path="res://addons/gostate/scripts/go_state.gd" id="2_w86re"]
+[ext_resource type="Script" uid="uid://c84yxhafbu5di" path="res://addons/gostate/scripts/go_state_transition.gd" id="3_tb7ty"]
+
+[sub_resource type="GDScript" id="GDScript_ht1s8"]
+resource_name = "go_state_demo"
+script/source = "@tool
+extends Control
+
+@export var go_state_machine: GoStateMachine
+
+var val_a = 2
+var val_b = 2
+
+func this_is_true()->bool:
+	return true
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_accept\"):
+		go_state_machine.trigger_state_event('foo')
+
+func _on_go_state_a_state_entered() -> void:
+	print(\"Entered State A\")
+
+
+func _on_go_state_a_state_exited() -> void:
+	print(\"Exited State A\")
+
+func _on_go_state_b_state_entered() -> void:
+	print(\"Entered State B\")
+
+
+func _on_go_state_b_state_exited() -> void:
+	print(\"Exited State B\")
+
+
+func _on_go_state_a_state_entering() -> void:
+	print(\"Entering State A\")
+
+
+func _on_go_state_a_state_exiting() -> void:
+	print(\"Exiting State A\")
+
+
+func _on_go_state_b_state_entering() -> void:
+	print(\"Entering State B\")
+
+
+func _on_go_state_b_state_exiting() -> void:
+	print(\"Exiting State B\")
+"
+
+[node name="Control" type="Control" unique_id=2073356228 node_paths=PackedStringArray("go_state_machine")]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource("GDScript_ht1s8")
+go_state_machine = NodePath("GoStateMachine")
+
+[node name="GoStateMachine" type="Node" parent="." unique_id=682770555 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_ht1s8")
+initial_state = NodePath("GoStateA")
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="GoStateA" type="Node" parent="GoStateMachine" unique_id=1257159972]
+script = ExtResource("2_w86re")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateA" unique_id=1120500529 node_paths=PackedStringArray("destination_state", "condition_input_node")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"foo"
+destination_state = NodePath("../../GoStateB")
+condition_input_node = NodePath("../../..")
+condition = "val_a == val_b"
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[node name="GoStateB" type="Node" parent="GoStateMachine" unique_id=165719857]
+script = ExtResource("2_w86re")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateB" unique_id=45401619 node_paths=PackedStringArray("destination_state")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"foo"
+destination_state = NodePath("../../GoStateA")
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[connection signal="state_entered" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_entered"]
+[connection signal="state_entering" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_entering"]
+[connection signal="state_exited" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_exited"]
+[connection signal="state_exiting" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_exiting"]
+[connection signal="state_entered" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_entered"]
+[connection signal="state_entering" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_entering"]
+[connection signal="state_exited" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_exited"]
+[connection signal="state_exiting" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_exiting"]

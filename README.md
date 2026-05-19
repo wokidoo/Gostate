@@ -24,10 +24,9 @@
 2. See the example scene: [addons/gostate/test_scene.tscn](addons/gostate/test_scene.tscn).
 
 ## ⚡ Quick start
-1. Add a [`StateMachine`](addons/gostate/scripts/state_machine.gd) node to your scene.  
-2. Add two child [`State`](addons/gostate/scripts/state.gd) nodes under the `StateMachine` and set the `initial_state` property on the machine to one of them.  
-3. Add [`StateTransition`](addons/gostate/scripts/state_transition.gd) nodes as children of both or one `State` to define transitions. Configure the `to` (target state) and `trigger_event` fields. See `StateTransition`.  
-4. Trigger transitions by calling `send_event("your_event")` on the machine (or propagate events from input handlers inside states).
+1. Add a [`GoStateMachine`](addons/gostate/scripts/state_machine.gd) node to your scene.  
+2. Add two child [`GoState`](addons/gostate/scripts/state.gd) nodes as children of the `GoStateMachine` and set the `initial_state` property in the state machine to one of them.  
+3. Trigger transitions by calling `send_event("your_event")` on the machine (or propagate events from input handlers inside states).
 
 <img alt="image" src="image.png" />
 

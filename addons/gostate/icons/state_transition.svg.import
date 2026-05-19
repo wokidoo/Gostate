@@ -3,15 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://rwdohxg5ydbj"
-path="res://.godot/imported/state_transition.svg-331fb0473550d9b0a2466973aa5076e9.ctex"
+path="res://.godot/imported/state_transition.svg-d81b6dacad0caf75c17c6054a4736858.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Gostate/icons/state_transition.svg"
-dest_files=["res://.godot/imported/state_transition.svg-331fb0473550d9b0a2466973aa5076e9.ctex"]
+source_file="res://addons/gostate/icons/state_transition.svg"
+dest_files=["res://.godot/imported/state_transition.svg-d81b6dacad0caf75c17c6054a4736858.ctex"]
 
 [params]
 
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -39,5 +40,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
+editor/scale_with_editor_scale=true
 editor/convert_colors_with_editor_theme=false
