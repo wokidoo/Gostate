@@ -38,6 +38,10 @@ var _condition_inputs:Dictionary
 func _init() -> void:
 	_condition_expression = Expression.new()
 
+func _ready() -> void:
+	if not Engine.is_editor_hint():
+		_parse_condition()
+
 func _handle_state_event(event:StringName)->bool:
 	if _source_state.is_active and event == trigger_event:
 		if not condition.is_empty():
@@ -59,11 +63,24 @@ func _notification(what: int) -> void:
 			_source_state = parent
 
 func _execute_condition()->bool:
+	if condition.is_empty():
+		return true
 	if condition_input_node != null:
 		_set_condtion_node_input_properties()
-		return _condition_expression.execute(_condition_inputs.values(),condition_input_node)
+		var result = _condition_expression.execute(_condition_inputs.values(),condition_input_node)
+		return result as bool
 	else:
-		return _condition_expression.execute()
+		var result = _condition_expression.execute()
+		return result as bool
+
+func _parse_condition() -> int:
+	if condition.is_empty():
+		return OK
+	if condition_input_node != null:
+		_set_condtion_node_input_properties()
+		return _condition_expression.parse(condition, _condition_inputs.keys())
+	else:
+		return _condition_expression.parse(condition)
 
 func _set_condtion_node_input_properties():
 	_condition_inputs.clear()

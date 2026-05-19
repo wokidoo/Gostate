@@ -52,7 +52,7 @@ func _on_go_state_b_state_exiting() -> void:
 	print(\"Exiting State B\")
 "
 
-[node name="Control" type="Control" unique_id=2073356228 node_paths=PackedStringArray("go_state_machine")]
+[node name="GoStateDemo" type="Control" unique_id=2073356228 node_paths=PackedStringArray("go_state_machine")]
 auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 15
@@ -74,12 +74,11 @@ metadata/_custom_type_script = "uid://bx384iuwj3u8u"
 script = ExtResource("2_w86re")
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateA" unique_id=1120500529 node_paths=PackedStringArray("destination_state", "condition_input_node")]
+[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateA" unique_id=1120500529 node_paths=PackedStringArray("destination_state")]
 script = ExtResource("3_tb7ty")
 trigger_event = &"foo"
 destination_state = NodePath("../../GoStateB")
-condition_input_node = NodePath("../../..")
-condition = "val_a == val_b"
+condition = "false"
 metadata/_custom_type_script = "uid://c84yxhafbu5di"
 
 [node name="GoStateB" type="Node" parent="GoStateMachine" unique_id=165719857]
