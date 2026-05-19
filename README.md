@@ -1,7 +1,6 @@
 # ➰ Gostate
 
 ![Godot Engine](https://img.shields.io/badge/Made%20With-Godot%204-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
-![Godot v4.4](https://img.shields.io/badge/Godot-v4.4-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
 
 **Gostate** is a lightweight Godot plugin that provides a simple node-based hierarchical state machine system.
 
