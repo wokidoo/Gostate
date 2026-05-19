@@ -1,7 +1,6 @@
 # ➰ Gostate
 
 ![Godot Engine](https://img.shields.io/badge/Made%20With-Godot%204-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
-![Godot v4.4](https://img.shields.io/badge/Godot-v4.4-478cbf?style=for-the-badge&logo=godotengine&logoColor=white)
 
 **Gostate** is a lightweight Godot plugin that provides a simple node-based hierarchical state machine system.
 
@@ -17,11 +16,6 @@
 - **Predictable lifecycle** - states signal when they become active or inactive so you can hook up animations, sounds, or setup/teardown code without guessing timing.
 - **Event-driven transitions** - wire transitions with send_event(...) from code for quick, readable flow control.
 - **Lightweight and non-intrusive** - small scripts, no external dependencies, and editor-friendly warnings so you spend less time debugging setup.
-
-
-## 📥 Installation
-1. Copy the `addons/gostate` folder into your project (it is already structured as a Godot plugin).   
-2. See the example scene: [addons/gostate/test_scene.tscn](addons/gostate/test_scene.tscn).
 
 ## ⚡ Quick start
 1. Add a [`GoStateMachine`](addons/gostate/scripts/state_machine.gd) node to your scene.  
