@@ -20,6 +20,8 @@ func this_is_true()->bool:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(\"ui_accept\"):
 		go_state_machine.trigger_state_event('foo')
+	elif event.is_action_pressed('ui_cancel'):
+		go_state_machine.trigger_state_event('bar')
 
 func _on_go_state_a_state_entered() -> void:
 	print(\"Entered State A\")
@@ -36,20 +38,20 @@ func _on_go_state_b_state_exited() -> void:
 	print(\"Exited State B\")
 
 
-func _on_go_state_a_state_entering() -> void:
-	print(\"Entering State A\")
+func _on_go_state_c_state_entered() -> void:
+	print(\"Entered State C\")
 
 
-func _on_go_state_a_state_exiting() -> void:
-	print(\"Exiting State A\")
+func _on_go_state_c_state_exited() -> void:
+	print(\"Exited State C\")
 
 
-func _on_go_state_b_state_entering() -> void:
-	print(\"Entering State B\")
+func _on_go_state_d_state_entered() -> void:
+	print(\"Entered State D\")
 
 
-func _on_go_state_b_state_exiting() -> void:
-	print(\"Exiting State B\")
+func _on_go_state_d_state_exited() -> void:
+	print(\"Exited State D\")
 "
 
 [node name="GoStateDemo" type="Control" unique_id=2073356228 node_paths=PackedStringArray("go_state_machine")]
@@ -58,44 +60,92 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -37.0
+offset_right = -37.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = SubResource("GDScript_ht1s8")
-go_state_machine = NodePath("GoStateMachine")
+go_state_machine = NodePath("GoStateMachineRoot")
 
-[node name="GoStateMachine" type="Node" parent="." unique_id=682770555 node_paths=PackedStringArray("initial_state")]
+[node name="GoStateMachineRoot" type="Node" parent="." unique_id=416713633 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_ht1s8")
-initial_state = NodePath("GoStateA")
+initial_state = NodePath("GoStateMachineA")
 metadata/_custom_type_script = "uid://bx384iuwj3u8u"
 
-[node name="GoStateA" type="Node" parent="GoStateMachine" unique_id=1257159972]
+[node name="GoStateMachineA" type="Node" parent="GoStateMachineRoot" unique_id=682770555 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_ht1s8")
+initial_state = NodePath("GoStateA")
+reentry_mode = 0
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineA" unique_id=1904319858 node_paths=PackedStringArray("destination_state")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"bar"
+destination_state = NodePath("../../GoStateMachineB")
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[node name="GoStateA" type="Node" parent="GoStateMachineRoot/GoStateMachineA" unique_id=1257159972]
 script = ExtResource("2_w86re")
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateA" unique_id=1120500529 node_paths=PackedStringArray("destination_state")]
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineA/GoStateA" unique_id=1120500529 node_paths=PackedStringArray("destination_state")]
 script = ExtResource("3_tb7ty")
 trigger_event = &"foo"
 destination_state = NodePath("../../GoStateB")
-condition = "false"
 metadata/_custom_type_script = "uid://c84yxhafbu5di"
 
-[node name="GoStateB" type="Node" parent="GoStateMachine" unique_id=165719857]
+[node name="GoStateB" type="Node" parent="GoStateMachineRoot/GoStateMachineA" unique_id=165719857]
 script = ExtResource("2_w86re")
 metadata/_custom_type_script = "uid://b42om5mouo7ee"
 
-[node name="GoStateTransition" type="Node" parent="GoStateMachine/GoStateB" unique_id=45401619 node_paths=PackedStringArray("destination_state")]
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineA/GoStateB" unique_id=45401619 node_paths=PackedStringArray("destination_state")]
 script = ExtResource("3_tb7ty")
 trigger_event = &"foo"
 destination_state = NodePath("../../GoStateA")
 metadata/_custom_type_script = "uid://c84yxhafbu5di"
 
-[connection signal="state_entered" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_entered"]
-[connection signal="state_entering" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_entering"]
-[connection signal="state_exited" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_exited"]
-[connection signal="state_exiting" from="GoStateMachine/GoStateA" to="." method="_on_go_state_a_state_exiting"]
-[connection signal="state_entered" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_entered"]
-[connection signal="state_entering" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_entering"]
-[connection signal="state_exited" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_exited"]
-[connection signal="state_exiting" from="GoStateMachine/GoStateB" to="." method="_on_go_state_b_state_exiting"]
+[node name="GoStateMachineB" type="Node" parent="GoStateMachineRoot" unique_id=1602459563 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_ht1s8")
+initial_state = NodePath("GoStateC")
+metadata/_custom_type_script = "uid://bx384iuwj3u8u"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineB" unique_id=1382645068 node_paths=PackedStringArray("destination_state")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"bar"
+destination_state = NodePath("../../GoStateMachineA")
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[node name="GoStateC" type="Node" parent="GoStateMachineRoot/GoStateMachineB" unique_id=693503989]
+script = ExtResource("2_w86re")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineB/GoStateC" unique_id=62893740 node_paths=PackedStringArray("destination_state")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"foo"
+destination_state = NodePath("../../GoStateD")
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[node name="GoStateD" type="Node" parent="GoStateMachineRoot/GoStateMachineB" unique_id=1005848366]
+script = ExtResource("2_w86re")
+metadata/_custom_type_script = "uid://b42om5mouo7ee"
+
+[node name="GoStateTransition" type="Node" parent="GoStateMachineRoot/GoStateMachineB/GoStateD" unique_id=792408295 node_paths=PackedStringArray("destination_state")]
+script = ExtResource("3_tb7ty")
+trigger_event = &"foo"
+destination_state = NodePath("../../GoStateC")
+metadata/_custom_type_script = "uid://c84yxhafbu5di"
+
+[connection signal="state_entered" from="GoStateMachineRoot/GoStateMachineA/GoStateA" to="." method="_on_go_state_a_state_entered"]
+[connection signal="state_entering" from="GoStateMachineRoot/GoStateMachineA/GoStateA" to="." method="_on_go_state_a_state_entering"]
+[connection signal="state_exited" from="GoStateMachineRoot/GoStateMachineA/GoStateA" to="." method="_on_go_state_a_state_exited"]
+[connection signal="state_exiting" from="GoStateMachineRoot/GoStateMachineA/GoStateA" to="." method="_on_go_state_a_state_exiting"]
+[connection signal="state_entered" from="GoStateMachineRoot/GoStateMachineA/GoStateB" to="." method="_on_go_state_b_state_entered"]
+[connection signal="state_entering" from="GoStateMachineRoot/GoStateMachineA/GoStateB" to="." method="_on_go_state_b_state_entering"]
+[connection signal="state_exited" from="GoStateMachineRoot/GoStateMachineA/GoStateB" to="." method="_on_go_state_b_state_exited"]
+[connection signal="state_exiting" from="GoStateMachineRoot/GoStateMachineA/GoStateB" to="." method="_on_go_state_b_state_exiting"]
+[connection signal="state_entered" from="GoStateMachineRoot/GoStateMachineB/GoStateC" to="." method="_on_go_state_c_state_entered"]
+[connection signal="state_exited" from="GoStateMachineRoot/GoStateMachineB/GoStateC" to="." method="_on_go_state_c_state_exited"]
+[connection signal="state_entered" from="GoStateMachineRoot/GoStateMachineB/GoStateD" to="." method="_on_go_state_d_state_entered"]
+[connection signal="state_exited" from="GoStateMachineRoot/GoStateMachineB/GoStateD" to="." method="_on_go_state_d_state_exited"]

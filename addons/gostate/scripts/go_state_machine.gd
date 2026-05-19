@@ -22,8 +22,6 @@ signal state_transition(from:GoState, to:GoState)
 ## [param event] The StringName of the event.
 signal state_event(event: StringName)
 
-# Traverses the GoStateMachine, printing all child States and their transitions.
-@export_tool_button("Print GoStateMachine") var _print_state_machine_action = _print_state_machine
 ## The GoState to enter when the machine starts.
 @export var initial_state: GoState:
 	set(val):
@@ -137,40 +135,3 @@ func _get_configuration_warnings() -> PackedStringArray:
 		request_ready()
 
 	return warnings
-
-func _print_state_machine():
-	print(name)
-	var sms:Array[GoStateMachine] =[]
-	for s in get_children():
-		if s is GoStateMachine:
-			for t in s.transitions:
-				var transition_string:String = t+"->"+s.transitions[t].name
-				print("\t",transition_string)
-			sms.append(s)
-		elif s is GoState:
-			print("\t",s.name)
-			for t in s.transitions:
-				print("\t\t",t,"->",s.transitions[t])
-	print()
-	for s in sms:
-		_print_state_machine_recursive(s)
-
-func _print_state_machine_recursive(sm:GoStateMachine = self,iter:int = 1):
-	var tabs:String ="\t"
-	print(tabs.repeat(iter),sm.name)
-	var sms:Array[GoStateMachine] =[]
-	for s in sm.get_children():
-		if s is GoStateMachine:
-			for t in s.transitions:
-				var transition_string:String = t+"->"+s.transitions[t].name
-				print(tabs.repeat(iter+3),transition_string)
-			sms.append(s)
-		elif s is GoState:
-			var name_string:String = s.name
-			print(tabs.repeat(iter+1),name_string)
-			for t in s.transitions:
-				var transition_string:String = t+"->"+s.transitions[t].name
-				print(tabs.repeat(iter+3),transition_string)
-	print()
-	for s in sms:
-		_print_state_machine_recursive(s)
